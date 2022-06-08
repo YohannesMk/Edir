@@ -72,7 +72,7 @@ if(isset($_POST['submit'])){
 <div class="form-container">
    <form action="" method="POST" enctype="multipart/form-data">
       <h3>Upload the csv file</h3>
-      <p style="color: #e74c3c;">please download and fill the required data as stated</p>
+      <p style="color: #e74c3c;">Please download and fill the required data as stated</p>
       <input type="file" name="uploadfile" placeholder="csv file" class="box" accept=".csv" required>
       <button name="upload" class="btn">Upload File</button>
       <a href="?file=ChildForm.csv" name="download" class="btn">Download CSV sample</a>

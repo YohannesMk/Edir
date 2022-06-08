@@ -19,7 +19,7 @@
         $item_id = $_POST['bottom-item-id'];
 
         $date_start = date("Y-m-d");
-        $date_return = date("Y-m-d", strtotime("+1 day"));
+        $date_return = date("Y-m-d");
         $qty = 1;
         
         $cart_item_result = mysqli_query($connection, "SELECT * FROM cart where item_id = '$item_id' and user_id = '$user_id'");
