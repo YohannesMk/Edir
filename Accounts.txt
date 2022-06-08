@@ -8,3 +8,7 @@ Phone Number	password	+
 +++++++++++++++++++++++++++++++++
 
 Both have user and admin level access to the website
+
+Database name = edir
+localhost
+No password
