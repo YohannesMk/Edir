@@ -1,0 +1,10 @@
+User Accounts to navigate
+
++++++++++++++++++++++++++++++++++			
+Phone Number	password	+
++++++++++++++++++++++++++++++++++
+911428051	0911428051	+
+966012486	0966012486	+
++++++++++++++++++++++++++++++++++
+
+Both have user and admin level access to the website

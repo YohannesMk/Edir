@@ -64,7 +64,7 @@
 
         <div class="txtb">
           <input type="text" id="id-input" name="Pnum">
-          <span data-placeholder="Id"></span>
+          <span data-placeholder="Phone Number"></span>
         </div>
 
         <div class="txtb">
