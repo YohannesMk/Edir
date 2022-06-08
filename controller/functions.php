@@ -22,6 +22,18 @@ function query_result_count($connection, $search, $string){
     return $total_rows;
 }
 
+function updateCart($connection, $subtotal_query, $user_id){
+    $sub_result = mysqli_query($connection, $subtotal_query);
+    $subtotal_price = 0;
+    
+    while($cart_rows = mysqli_fetch_array($sub_result)){
+        $return = relateService($connection, $cart_rows);
+        $days = 6;
+        $subtotal_price += (double)$return['price'] * (double)$cart_rows['quantity']* $days;
+    }
+}
+
+
 function exportImage($filename){
     if(file_exists($filename)) {
         header('Content-Description: File Transfer');

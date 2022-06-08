@@ -37,7 +37,7 @@ $res_data = mysqli_query($connection,$sql);
 ?>
 <div class="page-header text-center" style="background-image: url('../resources/images/edir-hero.jpg')">
     <div class="container">
-        <h1 class="page-title">Edir Members</h1>
+        <h1 class="page-title font-weight-bold" STYLE="color: orange">Members</h1>
     </div><!-- End .container -->
 </div><!-- End .page-header -->
 
@@ -47,9 +47,9 @@ $res_data = mysqli_query($connection,$sql);
 
       <div class="row">
         <div class="col-10 mx-auto col-md-6 my-5">
-          <h1 class="text-capitalize">Members <strong class="banner-title ">Page</strong></h1>
+          <h1 class="text-capitalize">Edir <strong class="banner-title ">Members</strong></h1>
           <p class="my-4 text-muted w-75">This is a page where you can get every member of the Edir.</p>
-          <a href="#" class="btn btn-outline-secondary btn-black text-uppercase ">explore</a>
+          <a href="#exp" class="btn btn-outline-secondary btn-black text-uppercase ">explore</a>
 
         </div>
         <div class="col-10 mx-auto col-md-6 align-self-center my-5">
@@ -65,7 +65,7 @@ $res_data = mysqli_query($connection,$sql);
          <!-- section title -->
       <div class="row">
         <div class="col-10 mx-auto col-sm-6 text-center">
-          <h1 class="text-capitalize">Edir <strong class="banner-title ">Members</strong></h1>
+          <h1 class="text-capitalize" id="exp" STYLE= "color: white" >Edir <strong class="banner-title ">Members</strong></h1>
         </div>
       </div>
       <!-- end of section title -->

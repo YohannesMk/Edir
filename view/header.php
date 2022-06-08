@@ -40,16 +40,16 @@ $total_cart = mysqli_fetch_array($res)[0];
     <meta name="theme-color" content="#ffffff">
     <!-- Plugins - File -->
     <!-- Main CSS File -->
-    <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../resources/css/owl.carousel.css">
+    <link rel="stylesheet" href="../resources/css/edir.css">
 
     <link rel="stylesheet" href="../resources/css/style.css">
     <link rel="stylesheet" href="../resources/css/skin-demo-4.css">
     <!-- <link rel="stylesheet" href="../resources/css/body.css"> -->
     <style>
-        /* html{
+         html{
             scroll-behavior: smooth;
         }
+        /*
         .mobile-nav.isActive{
                 color: blue;
         }
@@ -147,7 +147,7 @@ $total_cart = mysqli_fetch_array($res)[0];
                             <i class="icon-bars"></i>
                         </button>
 
-                        <a href="index.html" class="logo">
+                        <a href="timeline.php" class="logo">
                             <img src="../resources/images/icons/Group 21.png" alt="Edir Logo" width="105" height="25">
                         </a>
 

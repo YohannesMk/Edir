@@ -24,6 +24,9 @@ echo "Connected.";
 
 require_once "vendor/autoload.php";
 
+//here we create a random password and set it as a new passoword
+$n = 5;
+$password = bin2hex(random_bytes($n));
 //PHPMailer Object
 $mail = new PHPMailer(); //Argument true in constructor enables exceptions
 
@@ -34,7 +37,7 @@ if(isset($_POST) & !empty($_POST)){
 	$count = mysqli_num_rows($res);
 	if($count == 1){
 		$r = mysqli_fetch_assoc($res);
-		$password = $r['password'];
+		//$password = $r['password'];
         $to = $r['email'];
 
         $mail->isSMTP();
@@ -56,7 +59,7 @@ if(isset($_POST) & !empty($_POST)){
 
         $mail->setFrom('edir92057@gmail.com', 'Edir');
         $mail->addReplyTo('edir92057@gmail.com', 'Edir');
-        $mail->addAddress('yohannesmengistu1@gmail.com', 'jo');
+        $mail->addAddress("'$to'", 'jo');
         //$mail->addCC('cc1@example.com', 'Elena');
         //$mail->addBCC('bcc1@example.com', 'Alex');
 
@@ -68,19 +71,25 @@ if(isset($_POST) & !empty($_POST)){
         //$x = rand(1000,10000);
         //$_SESSION['code'] = $x;
 
+        
+
         $mailContent = "<h1>This is your confirmation password</h1>
             <h3>$password</h3>";
         $mail->Body = $mailContent;
-            }
-            if($mail->send()){
+  }
+  if($mail->send()){
+    $new_pass = mysqli_real_escape_string($conn, md5("'$password'"));
+    $passSql = "UPDATE user SET password = '$new_pass' WHERE email = '$email'";
+    $res = mysqli_query($connection, $sql);
             
-                echo 'Message has been sent';
-                //header('location:auth.php');
-            }
-            else{
-                echo 'Message could not be sent.';
-                echo 'Mailer Error: ' . $mail->ErrorInfo;
-    }
+    echo 'Message has been sent. New password has been sent to your email adress.';
+    //header('location:auth.php');
+  }
+  else{
+    echo 'Message could not be sent. Please check your connection and try again!';
+      //to debug we can use the following line of code
+      //echo 'Mailer Error: ' . $mail->ErrorInfo;
+  }
 
 }
 
@@ -117,38 +126,3 @@ if(isset($_POST) & !empty($_POST)){
 </div>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

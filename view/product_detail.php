@@ -17,21 +17,25 @@
     
     if(isset($_POST['bottom-submit'])){
         $item_id = $_POST['bottom-item-id'];
+
+        $date_start = date("Y-m-d");
+        $date_return = date("Y-m-d", strtotime("+1 day"));
         $qty = 1;
         
         $cart_item_result = mysqli_query($connection, "SELECT * FROM cart where item_id = '$item_id' and user_id = '$user_id'");
         $cart_row = mysqli_fetch_array($cart_item_result);
         if(!empty($cart_row)){
             if($item_id != $cart_row['item_id']){
-                $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+                $cartSql = "INSERT INTO cart(user_id, item_id, quantity, date_start, date_return) VALUES ($user_id, $item_id, $qty, $date_start ,$date_return)";
             }
             else{
-                $cartSql = "UPDATE cart SET quantity='$qty' WHERE user_id = $user_id AND item_id = $item_id";
+                $cartSql = "UPDATE cart SET quantity='$qty', date_start ='$date_start', date_return = '$date_return' WHERE user_id = $user_id AND item_id = $item_id";
             }
         }
         else{
-            $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+            $cartSql = "INSERT INTO cart(user_id, item_id, quantity, date_start ,date_return) VALUES ($user_id, $item_id, $qty, $date_start ,$date_return)";
         }
+
         mysqli_query($connection,$cartSql);
 
     }
@@ -39,22 +43,29 @@
     if(isset($_POST['product-submit'])){
         $qty = $_POST['product-qty'];
         $item_id = $_POST['product-id'];
+        $start_date = $_POST['date_start'];
+     
+        $return_date = $_POST['date_return'];
 
         $cart_item_result = mysqli_query($connection, "SELECT * FROM cart where item_id = '$item_id' and user_id = '$user_id'");
         $cart_row = mysqli_fetch_array($cart_item_result);
+    if($start_date<=$return_date){
 
         if(!empty($cart_row)){
             if($item_id != $cart_row['item_id']){
-                $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+                $cartSql = "INSERT INTO cart(user_id, item_id, quantity, date_start, date_return) VALUES ($user_id, $item_id, $qty, $start_date ,$return_date)";
             }
             else{
-                $cartSql = "UPDATE cart SET quantity='$qty' WHERE user_id = $user_id AND item_id = $item_id";
+                $cartSql = "UPDATE cart SET quantity='$qty', date_start = '$start_date', date_return = '$return_date' WHERE user_id = $user_id AND item_id = $item_id";
             }
         }
         else{
-            $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+            $cartSql = "INSERT INTO cart(user_id, item_id, quantity, date_start, date_return) VALUES ($user_id, $item_id, $qty, $start_date ,$return_date)";
         }
         mysqli_query($connection,$cartSql);
+    }else{
+            echo '<script>alert("please check the start and end date");</script>';
+    }
     }
     
     $ser_sql = "SELECT * FROM service where item_id<>'$id' ORDER BY date_updated limit 4";
@@ -90,7 +101,7 @@
                                     <div class="product-details-footer details-footer-col">
                                         <div class="product-cat">
                                             <span>Category:</span>
-                                            <a>rental</a>
+                                            <a>Rental</a>
                                         </div><!-- End .product-cat -->
                                     </div><!-- End .product-details-footer -->
 
@@ -99,10 +110,20 @@
                                             <label for="qty">Qty:</label>
                                             <div class="product-details-quantity">
                                                 <input type="number" id="qty" name="product-qty" class="form-control" value="1" min="1" max="<?=$row['quantity']?>" step="1" data-decimals="0" required>
-                                            </div><!-- End .product-details-quantity -->
-                                            <input type="hidden" name="product-id" value="<?=$row['item_id']?>">
-                                            <button type="submit" name="product-submit" class="btn-product btn-cart"><span>add to cart</span></a>
+                                            </div>
+
+                                            <label for="date_start">Start Date:</label>
+                                            <div class="product-details-quantity">
+                                                <input type="date" id="date_start" name="date_start" class="form-control" required>
+                                            </div>
+
+                                            <label for="date_return">Return Date:</label>
+                                            <div class="product-details-quantity">
+                                                <input type="date" id="date_return" name="date_return" class="form-control" required>
+                                            </div>
                                         </div><!-- End .details-action-col -->
+                                        <input type="hidden" name="product-id" value="<?=$row['item_id']?>">
+                                        <button type="submit" name="product-submit" class="btn-product btn-cart"><span>Add to cart</span></a>
                                     </div><!-- End .product-details-action -->
                                 </div><!-- End .product-details -->
                             </form>
@@ -124,7 +145,7 @@
                                             <img src="../assets/image/service/<?= $rows['filename']?>" alt="Product image" class="product-image">
                                         </a>
                                         <div class="product-action">
-                                            <button type="submit" name="bottom-submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                                            <button type="submit" name="bottom-submit" class="btn-product btn-cart"><span>Add to cart</span></button>
                                         </div><!-- End .product-action -->
                                     </figure><!-- End .product-media -->
 

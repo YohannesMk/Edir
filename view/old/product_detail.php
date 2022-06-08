@@ -14,7 +14,48 @@
     if(mysqli_num_rows($result)==1){
         $row = mysqli_fetch_array($result);
     }
+    
+    if(isset($_POST['bottom-submit'])){
+        $item_id = $_POST['bottom-item-id'];
+        $qty = 1;
+        
+        $cart_item_result = mysqli_query($connection, "SELECT * FROM cart where item_id = '$item_id' and user_id = '$user_id'");
+        $cart_row = mysqli_fetch_array($cart_item_result);
+        if(!empty($cart_row)){
+            if($item_id != $cart_row['item_id']){
+                $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+            }
+            else{
+                $cartSql = "UPDATE cart SET quantity='$qty' WHERE user_id = $user_id AND item_id = $item_id";
+            }
+        }
+        else{
+            $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+        }
+        mysqli_query($connection,$cartSql);
 
+    }
+
+    if(isset($_POST['product-submit'])){
+        $qty = $_POST['product-qty'];
+        $item_id = $_POST['product-id'];
+
+        $cart_item_result = mysqli_query($connection, "SELECT * FROM cart where item_id = '$item_id' and user_id = '$user_id'");
+        $cart_row = mysqli_fetch_array($cart_item_result);
+
+        if(!empty($cart_row)){
+            if($item_id != $cart_row['item_id']){
+                $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+            }
+            else{
+                $cartSql = "UPDATE cart SET quantity='$qty' WHERE user_id = $user_id AND item_id = $item_id";
+            }
+        }
+        else{
+            $cartSql = "INSERT INTO cart(user_id, item_id, quantity) VALUES ($user_id, $item_id, $qty)";
+        }
+        mysqli_query($connection,$cartSql);
+    }
     
     $ser_sql = "SELECT * FROM service where item_id<>'$id' ORDER BY date_updated limit 4";
     $ser_data = mysqli_query($connection,$ser_sql);
@@ -34,100 +75,84 @@
                         </div><!-- End .col-md-6 -->
 
                         <div class="col-md-6">
-                            <div class="product-details product-details-sidebar">
-                                <h1 class="product-title"><?= $row['itemName']?></h1><!-- End .product-title -->
-                                
-                                <div class="product-price">
-                                    $<?=$row['price']?>
-                                </div><!-- End .product-price -->
-                                
-                                <div class="product-content">
-                                    <p><?= $row['description']?></p>
-                                </div><!-- End .product-content -->
+                            <form method="POST">
+                                <div class="product-details product-details-sidebar">
+                                    <h1 class="product-title"><?= $row['itemName']?></h1><!-- End .product-title -->
+                                    
+                                    <div class="product-price">
+                                        $<?=$row['price']?>
+                                    </div><!-- End .product-price -->
+                                    
+                                    <div class="product-content">
+                                        <p><?= $row['description']?></p>
+                                    </div><!-- End .product-content -->
 
-                                <div class="product-details-footer details-footer-col">
-                                    <div class="product-cat">
-                                        <span>Category:</span>
-                                        <a href="#">rental</a>
-                                    </div><!-- End .product-cat -->
-                                </div><!-- End .product-details-footer -->
+                                    <div class="product-details-footer details-footer-col">
+                                        <div class="product-cat">
+                                            <span>Category:</span>
+                                            <a>rental</a>
+                                        </div><!-- End .product-cat -->
+                                    </div><!-- End .product-details-footer -->
 
-                                <div class="product-details-action">
-                                    <div class="details-action-col">
-                                        <label for="qty">Qty:</label>
-                                        <div class="product-details-quantity">
-                                            <input type="number" id="qty" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
-                                        </div><!-- End .product-details-quantity -->
-
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                                    </div><!-- End .details-action-col -->
-                                </div><!-- End .product-details-action -->
-                            </div><!-- End .product-details -->
+                                    <div class="product-details-action">
+                                        <div class="details-action-col">
+                                            <label for="qty">Qty:</label>
+                                            <div class="product-details-quantity">
+                                                <input type="number" id="qty" name="product-qty" class="form-control" value="1" min="1" max="<?=$row['quantity']?>" step="1" data-decimals="0" required>
+                                            </div><!-- End .product-details-quantity -->
+                                            <input type="hidden" name="product-id" value="<?=$row['item_id']?>">
+                                            <button type="submit" name="product-submit" class="btn-product btn-cart"><span>add to cart</span></a>
+                                        </div><!-- End .details-action-col -->
+                                    </div><!-- End .product-details-action -->
+                                </div><!-- End .product-details -->
+                            </form>
                         </div><!-- End .col-md-6 -->
                     </div><!-- End .row -->
                 </div><!-- End .product-details-top -->
 
 
-                <h2 class="title text-center mb-4">You May Also Like</h2><!-- End .title text-center -->
-                <div class="owl-simple carousel-equal-height carousel-with-shadow" data-toggle="owl" 
-                    data-owl-options='{
-                        "nav": false, 
-                        "margin": 20,
-                        "loop": false,
-                        "responsive": {
-                            "0": {
-                                "items":1
-                            },
-                            "480": {
-                                "items":2
-                            },
-                            "768": {
-                                "items":3
-                            },
-                            "992": {
-                                "items":4
-                            },
-                            "1200": {
-                                "items":4,
-                                "nav": false,
-                                "dots": false
-                            }
-                        }
-                    }'>
+                <h2 class="title text-center mt-4 mb-4">You May Also Like</h2><!-- End .title text-center -->
+                <div class="row">
                 <?php
                 while($rows = mysqli_fetch_array($ser_data)){
                     ?>
-                    <div class="product product-7 text-center">
-                        <figure class="product-media">
-                            <a href="?id=<?=$rows['item_id']?>">
-                                <img src="../assets/image/service/<?= $rows['filename']?>" alt="Product image" class="product-image">
-                            </a>
-                            <div class="product-action">
-                                <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
-                            </div><!-- End .product-action -->
-                        </figure><!-- End .product-media -->
+                        <div class="col-lg-3">
+                           <form method="POST">
+                                <div class="product product-7 shadow text-center">
+                                    <figure class="product-media">
+                                        <a href="?id=<?=$rows['item_id']?>">
+                                            <img src="../assets/image/service/<?= $rows['filename']?>" alt="Product image" class="product-image">
+                                        </a>
+                                        <div class="product-action">
+                                            <button type="submit" name="bottom-submit" class="btn-product btn-cart"><span>add to cart</span></button>
+                                        </div><!-- End .product-action -->
+                                    </figure><!-- End .product-media -->
 
-                        <div class="product-body">
-                            <h3 class="product-title"><a href="product.html"><?= $rows['itemName']?></a></h3><!-- End .product-title -->
-                            <p><?php 
-                             if(strlen($rows['description'])>50){
-                                $stringCut = substr($rows['description'], 0, 50);
-                                $endPoint = strrpos($stringCut, '.');
-                                $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
-                                echo $string;
-                            } 
-                            else{
-                                echo $rows['description'];
-                            }
-                            ?></p>
-                            <div class="product-price">
-                                $<?= $rows['price']?>
-                            </div><!-- End .product-price -->
-                        </div><!-- End .product-body -->
-                    </div><!-- End .product -->
+                                    <input type="hidden" name="bottom-item-id" value="<?=$rows['item_id']?>">
+                                    <div class="product-body">
+                                        <h3 class="product-title"><a href="product.php?cat=<?= $rows['itemName']?>"><?= $rows['itemName']?></a></h3><!-- End .product-title -->
+                                        <p><?php 
+                                        if(strlen($rows['description'])>50){
+                                            $stringCut = substr($rows['description'], 0, 50);
+                                            $endPoint = strrpos($stringCut, '.');
+                                            $string = $endPoint? substr($stringCut, 0, $endPoint) : substr($stringCut, 0);
+                                            echo $string;
+                                        } 
+                                        else{
+                                            echo $rows['description'];
+                                        }
+                                        ?></p>
+
+                                        <div class="product-price">
+                                            $<?= $rows['price']?>
+                                        </div><!-- End .product-price -->
+                                    </div><!-- End .product-body -->
+                                </div><!-- End .product -->
+                            </form>
+                        </div>
                     <?php
                         }
-                        mysqli_close($connection);
+                    mysqli_close($connection);
                     ?>
                 </div><!-- End .owl-carousel -->
             </div><!-- End .col-lg-9 -->
@@ -136,4 +161,4 @@
     </div><!-- End .container -->
 </div><!-- End .page-content -->
 
-<?= require 'footer.php'?>
+<?= require_once 'footer.php'?>

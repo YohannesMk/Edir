@@ -133,7 +133,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
                                 <div class="widget-text-content">
                                     <p>Here, you can add posts and send invitation cards using the the file uploading option on the form provided. 
-                                     But, if invitation card is not important, you can just upload any descriptive image of your desire.   .</p>
+                                     But, if invitation card is not mandatory, you can just upload any descriptive image of your desire.   .</p>
                                 </div><!-- End .widget-text-content -->
                             </div><!-- End .widget -->
                         </div><!-- End .sidebar -->

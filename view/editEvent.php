@@ -136,10 +136,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
                             </div><!-- End .widget -->
                             
                             <div class="widget widget-text">
-                                <h3 class="widget-title">About Blog</h3><!-- End .widget-title -->
+                                <h3 class="widget-title">Edit Event</h3><!-- End .widget-title -->
 
                                 <div class="widget-text-content">
-                                    <p>Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, pulvinar nunc sapien ornare nisl.</p>
+                                    <p>Here, you can edit posts and invitation cards using the the file uploading option on the form provided. 
+                                     But, if invitation card is not mandatory, you can just upload any descriptive image of your desire.</p>
                                 </div><!-- End .widget-text-content -->
                             </div><!-- End .widget -->
                         </div><!-- End .sidebar -->

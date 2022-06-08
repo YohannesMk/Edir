@@ -78,7 +78,7 @@ if(isset($_POST) & !empty($_POST)){
             }
             else{
                 echo 'Message could not be sent.';
-                echo 'Mailer Error: ' . $mail->ErrorInfo;
+               // echo 'Mailer Error: ' . $mail->ErrorInfo;
     }
 
 }

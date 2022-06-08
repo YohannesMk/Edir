@@ -7,7 +7,6 @@
             window.location.reload();
         }
     </script>
-    <!-- <script src="../resources/js/owl.carousel.min.js"></script> -->
     <!-- Main JS File -->
     <script src="../resources/js/main.js"></script>
 </body>
