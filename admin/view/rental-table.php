@@ -46,7 +46,7 @@ if(isset($_GET['search']))
                 { 
                 ?>
                 <tr>
-                <td><?php echo $rows['user_id']?></td>
+                <!-- <td><?php echo $rows['user_id']?></td> -->
                 <td><?php echo $rows['item_id']?></td>
                 <td><?php echo $rows['price']?></td>
                 <td><?php echo $rows['date_purchase']?></td>

@@ -30,7 +30,7 @@ $total_cart = mysqli_fetch_array($res)[0];
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Edir-Site</title>
     <meta name="keywords" content="Edir Site">
-    <meta name="description" content="Edir Site - Digitalized payment system">
+    <meta name="description" content="Edir Site - Digitalized Edir system">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="./.png">
@@ -49,6 +49,7 @@ $total_cart = mysqli_fetch_array($res)[0];
          html{
             scroll-behavior: smooth;
         }
+
         /*
         .mobile-nav.isActive{
                 color: blue;
@@ -107,8 +108,8 @@ $total_cart = mysqli_fetch_array($res)[0];
                         <a href="#">Eng</a>
                         <div class="header-menu">
                             <ul>
-                                <li><a href="#">English</a></li>
-                                <li><a href="#">Amharic</a></li>
+                                <li><a href="./timeline.php">English</a></li>
+                                <li><a href="./timeline_amh.php">Amharic</a></li>
                                 <li><a href="#">Oromiffa</a></li>
                             </ul>
                         </div>

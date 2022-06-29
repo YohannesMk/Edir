@@ -147,10 +147,10 @@ require_once 'header.php'
                                 }
                             }'>
                             <blockquote class="testimonial text-center">
-                                <img src="assets/images/testimonials/user-1.jpg" alt="user">
+                                <img src="../resources/images/testimonials/asefa.jpg" alt="user">
                                 <p>“ I believe in your work! ”</p>
                                 <cite>
-                                    Yohannes Assefa, CEO Tiyake.com
+                                    Yohannes Assefa, CEO of Tiyake.com
                                     <span>Customer</span>
                                 </cite>
                             </blockquote><!-- End .testimonial -->

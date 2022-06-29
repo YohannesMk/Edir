@@ -1,5 +1,7 @@
 <?php
 require_once 'header.php';
+require_once '../controller/validator.php';
+
 $server="localhost";
 $user="root";
 $password="";
@@ -17,13 +19,12 @@ if ($connection->connect_error) {
 
 //   if(isset($_POST['register']))
 
-if($_SERVER["REQUEST_METHOD"]=="POST")
+if($_SERVER["REQUEST_METHOD"]=="POST"){
 
-{
-	$name= $_POST ['cname'];
-	$email=$_POST['cemail'];
-	$subject=$_POST['csubject'];
-	$message=$_POST['cmessage'];
+	$name= test_input($_POST ['cname']);
+	$email = test_input($_POST['cemail']);
+	$subject = test_input($_POST['csubject']);
+	$message = test_input($_POST['cmessage']);
 	
 
 	$query="INSERT INTO contact (name, email, subject, message) VALUES('$name' ,'$email','$subject','$message')";
@@ -32,7 +33,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 	{
 		echo "Form Inserted Succesfully!";
 	}
-   
+	else{
+		echo "Submission UNSUCCESSFUL. Please try again!";
+	}
 	mysqli_close($connection);
 }
 

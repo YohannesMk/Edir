@@ -103,7 +103,7 @@
                 <div class="row align-items-center">
                 
                     <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
-                        <h4 class="page-title">Basic Table</h4>
+                        <h4 class="page-title">Edir Adminstrator</h4>
                     </div>
                     
                     <div class="col-lg-4 col-sm-8 col-md-6 col-xs-12 center">

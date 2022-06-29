@@ -6,6 +6,9 @@ if(!isset($_SESSION["login"]))
 
 
 require_once '../controller/functions.php';
+require '../controller/validator.php';
+
+
   $server="localhost";
   $user="root";
   $password="";
@@ -26,14 +29,12 @@ if ($connection->connect_error) {
 
 
 
-if($_SERVER["REQUEST_METHOD"]=="POST")
-
-  {
+if($_SERVER["REQUEST_METHOD"]=="POST")  {
 
     $user = $_SESSION['user_id'];
-    $title= $_POST ['title'];
+    $title= test_input($_POST ['title']);
     $eventType = $_POST['eventType'];
-    $description=$_POST['description'];
+    $description=test_input($_POST['description']);
     $doe=$_POST['doe'];
     $slug = create_slug($eventType.' '.$title);
 
@@ -55,10 +56,12 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         echo "Form Inserted Succesfully!";
         header("Location:events.php");
     }
+    else{
+      echo "Form insertion failed. Please enter an appropriate data!";
+    }
      
-      mysqli_close($connection);
+    mysqli_close($connection);
   }
-
 ?>
 
 <!DOCTYPE html>

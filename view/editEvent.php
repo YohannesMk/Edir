@@ -2,6 +2,7 @@
 require_once 'header.php';
 require_once '../controller/functions.php';
 require_once '../controller/connect.php';
+require_once '../controller/validator.php';
 
 if (isset($_GET['slug'])) {
     $slug = $_GET['slug'];
@@ -31,15 +32,20 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $msg = "Failed to upload image";
   }
 
-    $title= $_POST['title'];
-    $eventType = $_POST['eventType'];
-    $description=$_POST['description'];
+    $title= test_input($_POST['title']);
+    $eventType = test_input($_POST['eventType']);
+    $description=test_input($_POST['description']);
     $doe=$_POST['doe'];
 
     $query="UPDATE eventpost SET title='$title', eventDescription='$description', filename= '$filename', doe='$doe', eventType='$eventType' where slug='$slug';";
 
-    mysqli_query($connection, $query);
-   
+    if (mysqli_query($connection, $query)){
+        echo "Update Successful";
+    }
+    else {
+        echo "Update Failed!";
+        
+    }
   }
 
   $sql = "SELECT * FROM eventPost WHERE user_id = '$user_id' ORDER BY date_updated DESC";

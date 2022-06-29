@@ -2,19 +2,26 @@
 
 include 'config.php';
 
+function test_input($data) {
+   $data = trim($data);
+   $data = stripslashes($data);
+   $data = htmlspecialchars($data);
+   return $data;
+ }
+
 if(isset($_POST['submit'])){
 
-   $fName = mysqli_real_escape_string($conn, $_POST['fName']);
-   $lName = mysqli_real_escape_string($conn, $_POST['lName']);
+   $fName = mysqli_real_escape_string($conn, test_input($_POST['fName']));
+   $lName = mysqli_real_escape_string($conn, test_input($_POST['lName']));
    
-   $email = mysqli_real_escape_string($conn, $_POST['email']);
+   $email = mysqli_real_escape_string($conn, test_input($_POST['email']));
    $phone = mysqli_real_escape_string($conn, $_POST['phoneNo']);
 
-   $dob = mysqli_real_escape_string($conn, $_POST['dob']);
-   $gender = mysqli_real_escape_string($conn, $_POST['gender']);
+   $dob = mysqli_real_escape_string($conn, ($_POST['dob']));
+   $gender = mysqli_real_escape_string($conn, ($_POST['gender']));
 
-   $address = mysqli_real_escape_string($conn, $_POST['address']);
-   $houseNum = mysqli_real_escape_string($conn, $_POST['houseNum']);
+   $address = mysqli_real_escape_string($conn, test_input($_POST['address']));
+   $houseNum = mysqli_real_escape_string($conn, test_input($_POST['houseNum']));
 
    $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
    $cpass = mysqli_real_escape_string($conn, md5($_POST['cpassword']));
@@ -63,7 +70,7 @@ if(isset($_POST['submit'])){
    <title>Register</title>
 
    <!-- custom css file link  -->
-   <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
+   <link rel="stylesheet" href="../resources/css/edir.css">
    <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -127,7 +134,7 @@ if(isset($_POST['submit'])){
          </div>
       </div>
       <div class="mt-2">
-         <label>phone No.</label>
+         <label>Phone No.</label>
          <input type="number" name="phoneNo" class="form-control">
       </div>  
 

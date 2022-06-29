@@ -45,8 +45,8 @@ if(!isset($user_id)){
       <h3><?php echo $fetch['fName']." ".$fetch['lName']; ?></h3>
       <a href="addChild.php" class="btn" style="background-color: #32CD32;">Add Childrens</a>
       <a href="../view/timeline.php" class="btn">Home</a>
-      <a href="update_profile.php" class="btn">update profile</a>
-      <a href="../controller/logout.php" class="delete-btn">logout</a>
+      <a href="update_profile.php" class="btn">Update Profile</a>
+      <a href="../controller/logout.php" class="delete-btn">Logout</a>
 
       
    </div>

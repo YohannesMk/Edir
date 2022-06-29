@@ -10,5 +10,11 @@
     <!-- Main JS File -->
     <script src="../resources/js/main.js"></script>
 </body>
+<footer class="footer text-center">
+          <!-- 2022 © Edir Admin Site -->
+          <hr>
+          <?php echo date("M Y"); ?>, Edir ©Copyright. 
+          <br><br>
+</footer>
 
 </html> 

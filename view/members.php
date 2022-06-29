@@ -2,6 +2,7 @@
     require_once 'header.php';
     require_once '../controller/connect.php';
     require_once '../controller/functions.php';
+    require_once '../controller/validator.php';
     
 if (isset($_GET['pageno'])) {
     $pageno = $_GET['pageno'];
@@ -21,7 +22,7 @@ $total_pages = ceil($total_rows / $no_of_records_per_page);
 $sql = "SELECT * FROM user ORDER BY date_joined DESC LIMIT $offset, $no_of_records_per_page";
 
 if(isset($_GET['search'])){
-  $search = $_GET['search'];
+  $search = test_input($_GET['search']);
 
   if(!empty($search)){
       $sql = "SELECT * FROM user where fName like '%$search%' OR  lName like '%$search%' ORDER BY date_joined DESC LIMIT $offset, $no_of_records_per_page";

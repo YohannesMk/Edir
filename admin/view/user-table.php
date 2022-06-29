@@ -77,7 +77,7 @@ if(isset($_GET['search']))
             <form method="POST" action="">
                 <td>
                     <div class="col-sm-6 col-md-6 col-lg-3 f-icon">
-                        <button type="submit"><i class="fas fa-pencil-alt"></i><span>update</span></button>
+                        <button type="submit"><i class="fas fa-pencil-alt"></i><span>Update</span></button>
                     </div>
                 <td>
                 <td>

@@ -2,14 +2,14 @@
 require_once 'header.php';
 require_once '../controller/functions.php';
 require_once '../controller/connect.php';
-
+require_once '../controller/validator.php';
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
   {
     $user = $_SESSION['user_id'];
-    $title= $_POST ['title'];
-    $eventType = $_POST['eventType'];
-    $description=$_POST['description'];
+    $title= test_input($_POST ['title']);
+    $eventType = test_input($_POST['eventType']);
+    $description=test_input($_POST['description']);
     $doe=$_POST['doe'];
     $slug = create_slug($eventType.' '.$title);
 
@@ -30,6 +30,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     if(mysqli_query($connection, $query))
     {
         echo "Event Created Successfully!";
+    }
+    else{
+        echo "Event Creation is not successful. Please enter an appropriate and non-duplicated data.";
     }
      
   }

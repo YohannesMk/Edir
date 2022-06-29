@@ -1,6 +1,7 @@
 <?php
   require_once '../controller/connect.php';
   require_once("header.php");
+  require_once '../controller/validator.php';
 
   if (isset($_GET['pageno'])) {
     $pageno = $_GET['pageno'];
@@ -23,7 +24,7 @@ if (isset($_GET['cat'])) {
   $sql = "SELECT * FROM service where itemName = '$cat' ORDER BY date_updated DESC LIMIT $offset, $no_of_records_per_page";
 
   if(isset($_GET['search'])){
-    $search = $_GET['search'];
+    $search = test_input($_GET['search']);
 
     if(!empty($search)){
         $sql = "SELECT * FROM service where itemName like '%$search%' AND itemName = '$cat' ORDER BY date_updated DESC LIMIT $offset, $no_of_records_per_page";
@@ -43,7 +44,7 @@ if (isset($_GET['cat'])) {
   $sql = "SELECT * FROM service ORDER BY date_updated DESC LIMIT $offset, $no_of_records_per_page";
 
   if(isset($_GET['search'])){
-    $search = $_GET['search'];
+    $search = test_input($_GET['search']);
 
     if(!empty($search)){
         $sql = "SELECT * FROM service WHERE itemName like '%$search%' ORDER BY date_updated DESC LIMIT $offset, $no_of_records_per_page";
@@ -92,10 +93,10 @@ $res_data = mysqli_query($connection,$sql);
       <div class="row">
         <div class=" col-lg-8 mx-auto d-flex justify-content-around my-2 sortBtn flex-wrap">
           <a href="product.php" class="btn btn-outline-secondary  filter-btn m-2" data-filter="all">All</a>
-          <a href="?cat=dish<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary  filter-btn m-2" data-filter="all">Dishes</a>
-          <a href="?cat=denkuan<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="cakes">Denkuan</a>
-          <a href="?cat=chair<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="cupcakes">Chairs</a>
-          <a href="?cat=other<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="sweets">Other</a>
+          <a href="?cat=dish<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary  filter-btn m-2" data-filter="Dish">Dishes</a>
+          <a href="?cat=dinkuan<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="Dinkuan">Dinkuan</a>
+          <a href="?cat=chair<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="Chair">Chairs</a>
+          <a href="?cat=other<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="Other">Other</a>
         </div>
       </div>
       <!-- search box -->

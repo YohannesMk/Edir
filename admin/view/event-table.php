@@ -2,13 +2,14 @@
 $export_id = 2;
 require_once 'admin-header.php';
 require_once '../controller/connect.php';
+require_once '../../controller/validator.php';
 
 $sql = "SELECT * From eventPost";
 $result = mysqli_query($connection, $sql);
 
 if(isset($_GET['search']))
   {
-   $search = $_GET['search'];
+   $search = test_input($_GET['search']);
   
     $query="SELECT * FROM eventpost where title like '%$search%' OR eventType like '%$search%' OR eventDescription like '%$search%'";
     $result = mysqli_query($connection, $query);

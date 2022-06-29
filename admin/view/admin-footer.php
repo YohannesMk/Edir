@@ -1,5 +1,6 @@
           <footer class="footer text-center">
-          2022 © Edir Admin Site
+          <!-- 2022 © Edir Admin Site -->
+          <?php echo date("M Y"); ?> ,Edir Adminstrator ©Copyright. 
         </footer>
     </div>
 </div>

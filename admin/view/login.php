@@ -1,10 +1,12 @@
 <?php
 require_once '../controller/connect.php';
+require_once '../../controller/validator.php';
+
 session_start();
 
 if(isset($_POST['submit'])){
 
-   $phone = mysqli_real_escape_string($connection, $_POST['phone']);
+   $phone = mysqli_real_escape_string($connection, test_input($_POST['phone']));
    $pass = mysqli_real_escape_string($connection, md5($_POST['password']));
 
    $select = mysqli_query($connection, "SELECT * FROM user WHERE phoneNo = '$phone' AND password = '$pass' AND is_admin = 1") or die('query failed');

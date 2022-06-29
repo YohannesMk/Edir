@@ -1,11 +1,6 @@
 <?php
-//session_start();
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-require './PHPMailer-master/PHPMailer-master/src/Exception.php';
-require './PHPMailer-master/PHPMailer-master/src/PHPMailer.php';
-require './PHPMailer-master/PHPMailer-master/src/SMTP.php';
+require '../controller/mailer.php';
+require_once '../controller/validator.php';
 
 $server="localhost";
 $user="root";
@@ -20,66 +15,34 @@ if ($connection->connect_error) {
 }
 echo "Connected.";
 
-require_once "vendor/autoload.php";
-
-//PHPMailer Object
-$mail = new PHPMailer(); //Argument true in constructor enables exceptions
 
 if(isset($_POST) & !empty($_POST)){
-	$email = mysqli_real_escape_string($connection, $_POST['email_addy']);
+	$email = mysqli_real_escape_string($connection, test_input($_POST['email_addy']));
 	$sql = "SELECT * FROM `user` WHERE email = '$email'";
 	$res = mysqli_query($connection, $sql);
 	$count = mysqli_num_rows($res);
 	if($count == 1){
 		$r = mysqli_fetch_assoc($res);
-		$password = $r['password'];
+		$password = randomPass(5);
         $to = $r['email'];
         $name = $r['fName'];
-
-        $mail->isSMTP();
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-            'verify_peer' => false,
-            'verify_peer_name' => false,
-            'allow_self_signed' => true
-            )
-            );
-        $mail->Host = 'smtp.gmail.com';
-        $mail->SMTPAuth = true;
-        $mail->Username = 'edir92057@gmail.com';
-        $mail->Password = 'edir2000';
-        //$mail->SMTPDebug = 'SMTP::DEBUG_SERVER';
-        $mail->SMTPSecure = 'tls';
-        $mail->Port = 587;
-
-
-        $mail->setFrom('edir92057@gmail.com', 'Edir');
-        $mail->addReplyTo('edir92057@gmail.com', 'Edir');
-        $mail->addAddress($email, $name);
-        //$mail->addCC('cc1@example.com', 'Elena');
-        //$mail->addBCC('bcc1@example.com', 'Alex');
-
-
-        //$mail->AddBCC('bcc2@example.com', 'Anna');
-        //$mail->AddBCC('bcc3@example.com', 'Mark');
-        $mail->Subject = 'This is your recovery password';
-        $mail->isHTML(true);
-        //$x = rand(1000,10000);
-        //$_SESSION['code'] = $x;
-
-        $mailContent = "<h1>This is your confirmation password</h1>
-            <h3>$password</h3>";
-        $mail->Body = $mailContent;
-            }
-            if($mail->send()){
-            
-                echo 'Message has been sent';
-                //header('location:auth.php');
-            }
-            else{
-                echo 'Message could not be sent.';
-               // echo 'Mailer Error: ' . $mail->ErrorInfo;
-    }
+   }
+   $subj = "Dear $name,";
+   $mailContent = "Use this password temporairly to log into your Edir Account and change it after you logged in.
+   <h3>$password</h3>";
+   
+   if(send_mail($to, $subj, $mailContent)){
+      $password = md5($password);
+      $query="UPDATE user SET password='$password' where email='$to';";
+      
+      if (mysqli_query($connection, $query)){
+         echo "Update Successful";
+     }
+     else {
+         echo "Update Failed!";
+         
+     }
+   }
 
 }
 ?>
@@ -111,17 +74,17 @@ if(isset($_POST) & !empty($_POST)){
       <div id="subMenu" class="panel panel-default">
          <ul class="subMenuHighlight panel-heading">
             <li class="subMenuHighlight panel-title" id="subMenuHighlight">
-               <a id="li_291" class="subMenuHighlight" href="../../profile/register.php"><span>Register</span></a>
+               <a id="li_291" class="subMenuHighlight" href="../profile/register.php"><span>Register</span></a>
             </li>
          </ul>
          <ul class="panel-heading">
             <li class="panel-title">
-               <a class="subMenu1" href=""><span class="subMenuHighlight">Forgot Password</span></a>
+               <a class="subMenu1" href="#"><span class="subMenuHighlight">Forgot Password</span></a>
             </li>
          </ul>
          <ul class="panel-heading">
             <li class="panel-title">
-               <a class="subMenu1" href="../../view/login.php"><span>Login</span></a>
+               <a class="subMenu1" href="./login.php"><span>Login</span></a>
             </li>
          </ul>
       </div>
@@ -133,7 +96,7 @@ if(isset($_POST) & !empty($_POST)){
 <div class="col-sm-9 col-md-9 col-lg-10 content equal-height">
   <div class="content-area-right">
    <div class="content-crumb-div">
-      <a href="">Home</a> / <a href="">Your Account</a> / Forgot Password
+      <!-- <a href="">Home</a> / <a href="">Your Account</a> / Forgot Password -->
    </div>
       <div class="row">
       <form role="form" autocomplete="off" method="post">  

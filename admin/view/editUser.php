@@ -1,7 +1,7 @@
 <?php
 require_once '../controller/connect.php';
 require_once 'admin-header.php';
-
+require_once '../../controller/validator.php';
 
 $fetch_sql = "SELECT * FROM user where user_id = '$admin_id' limit 1";
 
@@ -12,14 +12,14 @@ if(mysqli_num_rows($fetch_result)==1){
 
 if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["update"]))
   {
-    $fName= $_POST['fName'];
-    $mName = $_POST['mName'];
-    $lName = $_POST['lName'];
-    $email = $_POST['email'];
+    $fName= test_input($_POST['fName']);
+    $mName = test_input($_POST['mName']);
+    $lName = test_input($_POST['lName']);
+    $email = test_input($_POST['email']);
     $gender = $_POST['gender'];
-    $address = $_POST['address'];
-    $phoneNo = $_POST['phoneNo'];
-    $houseNum=$_POST['houseNum'];
+    $address = test_input($_POST['address']);
+    $phoneNo = test_input($_POST['phoneNo']);
+    $houseNum=test_input($_POST['houseNum']);
     $password =  mysqli_real_escape_string($connection, md5($_POST['password']));
 
     $query="UPDATE user SET fname='$fName', mName='$mName', lName='$lName', email='$email', gender='$gender', address='$address', phoneNo='$phoneNo', houseNum='$houseNum', password='$password' where user_id='$admin_id';";
@@ -43,8 +43,9 @@ if($_SERVER["REQUEST_METHOD"]=="POST" && isset($_POST["update"]))
                   <img
                     width="100%"
                     alt="user"
-                    src="../../edir final MVC/profile/uploaded_img/<?=$fetch_row['profile']?>"
-                  />
+                    src="../../profile/uploaded_img/<?=$fetch_row['profile']?>"
+                    
+                    />
                 </div>
             </div>
         </div>

@@ -1,6 +1,7 @@
 <?php
 require_once '../controller/connect.php';
 require_once '../controller/functions.php';
+require_once '../controller/validator.php';
 require_once 'header.php';
 
 if (isset($_GET['pageno'])) {
@@ -28,10 +29,11 @@ $total_rows = mysqli_fetch_array($result)[0];
 $total_pages = ceil($total_rows / $no_of_records_per_page);
 
 if(isset($_POST['proceed'])){
-    $fName = $_POST['fName'];
-    $lName = $_POST['lName'];
-    $bankAcc = $_POST['bacc'];
-    $payCode = $_POST['pcode'];
+    
+    $fName = test_input($_POST['fName']);
+    $lName = test_input($_POST['lName']);
+    $bankAcc = test_input($_POST['bacc']);
+    $payCode =test_input( $_POST['pcode']);
 
     $allCart = "SELECT * FROM cart where user_id = '$user_id'";
     $allRes = mysqli_query($connection, $allCart);

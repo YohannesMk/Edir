@@ -2,6 +2,8 @@
     require_once 'header.php';
     require_once '../controller/connect.php';
     require_once '../controller/functions.php';
+    require_once '../controller/validator.php';
+
     
 if (isset($_GET['pageno'])) {
     $pageno = $_GET['pageno'];
@@ -25,7 +27,7 @@ if (isset($_GET['cat'])) {
     $sql = "SELECT * FROM eventpost where eventType = '$cat' ORDER BY doe DESC LIMIT $offset, $no_of_records_per_page";
 
     if(isset($_GET['search'])){
-        $search = $_GET['search'];
+        $search = test_input($_GET['search']);
 
         if(!empty($search)){
             $sql = "SELECT * FROM eventpost where title like '%$search%' AND eventType = '$cat' ORDER BY doe DESC LIMIT $offset, $no_of_records_per_page";
@@ -45,7 +47,7 @@ if (isset($_GET['cat'])) {
     $sql = "SELECT * FROM eventpost ORDER BY doe DESC LIMIT $offset, $no_of_records_per_page";
 
     if(isset($_GET['search'])){
-        $search = $_GET['search'];
+        $search = test_input($_GET['search']);
 
         if(!empty($search)){
             $sql = "SELECT * FROM eventpost where title like '%$search%' ORDER BY doe DESC LIMIT $offset, $no_of_records_per_page";
@@ -98,9 +100,9 @@ $res_data = mysqli_query($connection,$sql);
         <div class=" col-lg-8 mx-auto d-flex justify-content-around my-2 sortBtn flex-wrap">
           <a href="event.php" class="btn btn-outline-secondary  filter-btn m-2" data-filter="all">All</a>
           <a href="?cat=graduation<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary  filter-btn m-2" data-filter="all">Graduation</a>
-          <a href="?cat=wedding<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="cakes">Wedding</a>
-          <a href="?cat=funeral<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="cupcakes">Funeral</a>
-          <a href="?cat=other<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="sweets">Other</a>
+          <a href="?cat=wedding<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="Wedding">Wedding</a>
+          <a href="?cat=funeral<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="Funeral">Funeral</a>
+          <a href="?cat=other<?php if(!empty($search)){echo '&search='.$search;}?>" class="btn btn-outline-secondary btn-black text-uppercase filter-btn m-2" data-filter="Other">Other</a>
         </div>
       </div>
       <div class="row">

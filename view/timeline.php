@@ -166,7 +166,7 @@ $gnum = query_result_count($connection, $search, 'graduation');
                         <h3 class="widget-title">Categories</h3><!-- End .widget-title -->
 
                         <ul>
-                            <li><a href="blog.php">All<span><?= $total_rows?></span></a></li>
+                            <li><a href="timeline.php">All<span><?= $total_rows?></span></a></li>
                             <li><a href="?category=wedding<?php if(!empty($search)){echo '&search='.$search;}?>">Weddding<span><?= $wnum?></span></a></li>
                             <li><a href="?category=graduation<?php if(!empty($search)){echo '&search='.$search;}?>">Graduation<span><?= $gnum?></span></a></li>
                             <li><a href="?category=funeral<?php if(!empty($search)){echo '&search='.$search;}?>">Funeral<span><?= $fnum?></span></a></li>

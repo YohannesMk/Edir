@@ -2,6 +2,7 @@
 require_once '../controller/connect.php';
 require_once 'admin-header.php';
 require_once '../controller/functions.php';
+require_once '../../controller/validator.php';
 
 if(isset($_GET['timeline_slug'])){
     $slug = $_GET['timeline_slug'];
@@ -18,13 +19,14 @@ else{
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
   {
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    $title = test_input($_POST['title']);
+    $category = $_POST['category'];
+    $content = test_input($_POST['content']);
 
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"]; 
  
-    $folder = "../assets/image/timeline/".$filename;
+    $folder = "../../assets/image/timeline/".$filename;
  
     if (move_uploaded_file($tempname, $folder)){
         $msg = "Image uploaded successfully";
@@ -33,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $msg = "Failed to upload image";
     }
 
-    $query="UPDATE timeline SET title ='$title', content = '$content', filename = '$filename' WHERE slug='$slug'";
+    $query="UPDATE timeline SET title ='$title', category='$category', content = '$content', filename = '$filename' WHERE slug='$slug'";
 
     if(mysqli_query($connection, $query))
     {
@@ -45,12 +47,24 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 ?>
 <div class="col-12 p-3">
 <div class="card p-3 p-md-5">
-<h3>Update Timeline</h3>
+<h3>Update Timeline Post</h3>
 <form action="" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-6">
             <label for="title">Title:</label>
             <input class="form-control mb-1" type="text" value="<?=$rows['title']?>" name="title" id="title" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <label>Event Type</label>
+                <select class="form-control" name="category">
+                    <option selected></option>
+                    <option value="Graduation">Graduation</option>
+                    <option value="Wedding">Wedding</option>
+                    <option value="Funeral">Funeral</option>
+                    <option value="Other">Other</option>
+                </select>
         </div>
     </div>
     <div class="row">

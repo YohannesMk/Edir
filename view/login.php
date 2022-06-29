@@ -1,7 +1,8 @@
 
   <?php
+require_once '../controller/validator.php';
 
-  session_start();
+session_start();
 
    $server="localhost";
    $user="root";
@@ -15,9 +16,9 @@
  }
    echo "Connected.";
 
-   if($_SERVER["REQUEST_METHOD"]=="POST")
-   {
-        $phone=$_POST['Pnum'];
+   if($_SERVER["REQUEST_METHOD"]=="POST"){
+    
+        $phone= test_input($_POST['Pnum']);
         $password = md5($_POST['password']);
         // password_verify($password,$_POST['password']);
      $sql="SELECT * from user where phoneNo='".$phone."'AND password='".$password."' AND is_active=1 limit 1";
@@ -75,7 +76,7 @@
         <input type="submit" name="submit"  class="logbtn" id="pssword-input" >
 
         <div class="bottom-text" style="font-size:16px">
-          Forgot Password?<a href="../libraries/mailtrial/forgot-password.php"> Reset password</a>
+          Forgot Password?<a href="./forgot-password.php"> Reset password</a>
           <br>
           You Dont Have An Account?<a href="../profile/register.php"> Sign-up</a>
         </div>

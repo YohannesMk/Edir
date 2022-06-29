@@ -23,7 +23,7 @@ if(mysqli_num_rows($result)==1){
             <div class="row">
                 <div class="col-md-10">
                     <div class="details-filter-row details-row-size">
-                        <label for="qty">Qty:</label>
+                        <label for="qty">Qantity:</label>
                         <div class="product-details-quantity">
                             <input type="number" id="qty" class="form-control" value="1" min="1" max="<?= $row['quantity']?>" step="1" data-decimals="0" required>
                         </div>
@@ -31,7 +31,7 @@ if(mysqli_num_rows($result)==1){
                 </div>
                 <div class="col-md-10">
                     <div class="product-details-action">
-                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                        <a href="#" class="btn-product btn-cart"><span>Add to cart</span></a>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,8 @@
 <?php 
 require_once '../controller/connect.php';
 require_once 'admin-header.php';
+require_once '../../controller/validator.php';
+
 
 if(isset($_GET['item_id'])){
     $item_id = $_GET['item_id'];
@@ -18,15 +20,16 @@ else{
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
   {
-    $itemName = $_POST ['item-name'];
+    $itemName = test_input($_POST ['item-name']);
+    $category = $_POST ['category'];
     $price = $_POST['price'];
     $qty = $_POST['qty'];
-    $description = $_POST['description'];
+    $description = test_input($_POST['description']);
 
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"]; 
  
-    $folder = "../assets/image/service/".$filename;
+    $folder = "../../assets/image/service/".$filename;
  
     if (move_uploaded_file($tempname, $folder)){
         $msg = "Image uploaded successfully";
@@ -35,7 +38,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $msg = "Failed to upload image";
     }
 
-    $query="UPDATE service SET itemName = '$itemName', description = '$description', price = '$price', quantity = '$qty', filename = '$filename' where item_id = '$item_id'";
+    $query="UPDATE service SET itemName = '$itemName',category = '$category', description = '$description', price = '$price', quantity = '$qty', filename = '$filename' where item_id = '$item_id'";
 
     if(mysqli_query($connection, $query))
     {
@@ -54,6 +57,18 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         <label for="title">Item Name:</label>
         <input class="form-control mb-1" type="text" value="<?=$rows['itemName'];?>" name="item-name" id="title" required>
     </div>
+</div>
+<div class="row">
+        <div class="col-sm-6">
+                <label>Category</label>
+                    <select class="form-control" name="category" placeholder="Select item category">
+                        <option selected></option>
+                        <option value="Dinkuan">Dinkuan(Tent)</option>
+                        <option value="Chair">Chair</option>
+                        <option value="Dish">Dish</option>
+                        <option value="Other">Other</option>
+                    </select>
+        </div>
 </div>
 <div class="row">
     <div class="col-md-2">

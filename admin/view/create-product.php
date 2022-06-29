@@ -6,14 +6,13 @@ require_once 'admin-header.php';
 if($_SERVER["REQUEST_METHOD"]=="POST")
   {
     $itemName = $_POST ['item-name'];
+    $category= $_POST['category'];
     $price = $_POST['price'];
     $qty = $_POST['qty'];
     $description = $_POST['description'];
-
     $filename = $_FILES["uploadfile"]["name"];
     $tempname = $_FILES["uploadfile"]["tmp_name"]; 
- 
-    $folder = "../assets/image/service/".$filename;
+    $folder = "../../assets/image/service/".$filename;
  
     if (move_uploaded_file($tempname, $folder)){
         $msg = "Image uploaded successfully";
@@ -22,7 +21,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
         $msg = "Failed to upload image";
     }
 
-    $query="INSERT INTO service (itemName, description, price, quantity, filename) VALUES('$itemName','$description','$price' ,'$qty', '$filename')";
+    $query="INSERT INTO service (itemName,category, description, price, quantity, filename) VALUES('$itemName', '$category', $description','$price' ,'$qty', '$filename')";
 
     if(mysqli_query($connection, $query))
     {
@@ -34,13 +33,25 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 ?>
 <div class="col-12 p-3">
 <div class="card p-3 p-md-5">
-<h3>Add New Product</h3>
+<h3>Add New Item</h3>
 <form action="" method="post" enctype="multipart/form-data">
 <div class="row">
     <div class="col-md-6">
         <label for="title">Item Name:</label>
         <input class="form-control mb-1" type="text" name="item-name" id="title" required>
     </div>
+</div>
+<div class="row">
+        <div class="col-sm-6">
+                <label>Category</label>
+                    <select class="form-control" name="category" placeholder="Select item category">
+                        <option selected></option>
+                        <option value="Dinkuan">Dinkuan(Tent)</option>
+                        <option value="Chair">Chair</option>
+                        <option value="Dish">Dish</option>
+                        <option value="Other">Other</option>
+                    </select>
+        </div>
 </div>
 <div class="row">
     <div class="col-md-2">
@@ -56,7 +67,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
     <div class="row mb-1">
         <div class="col-md-2">
             <div class="details-filter-row details-row-size">
-                <label for="qty">Qty:</label>
+                <label for="qty">Qantity:</label>
                 <div class="product-details-quantity">
                     <input type="number" id="qty" name="qty" class="form-control" value="1" min="1" step="1" data-decimals="0" required>
                 </div>
@@ -66,7 +77,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
     <div class="row">
         <div class="col-md-3">
-            <label for="cover">image:</label>
+            <label for="cover">Image:</label>
             <input class="form-control mb-1" type="file" name="uploadfile" id="cover">
         </div>
     </div>
@@ -80,4 +91,4 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 </form>
 </div></div>
 
-<?= require_once '../view/footer.php'; ?>
+<?= require_once 'admin-footer.php'; ?>
